@@ -4,12 +4,15 @@ import Listing from "./models/listing.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import methodoverride from "method-override";
+import ejsMate from "ejs-mate";
 const app=express();
 app.use(methodoverride("_method"));
+app.engine("ejs",ejsMate);
 const MONGO_URL="mongodb://127.0.0.1:27017/wonderlust";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.urlencoded({extended:true}));
+app.use(express.static(path.join(__dirname,"/public")));
 
 main().then(()=>{
 console.log("connected to database");
