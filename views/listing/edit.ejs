@@ -7,11 +7,16 @@
 </head>
 <body>
     <form action="/listings/<%=listing._id%>?_method=PUT" method="POST">
-        <input type="text" name="title" value="<%=listing.title%>">
-        <input type="text" name="description" value="<%=listing.description%>">
-        <input type="number" name="price" value="<%=listing.price%>">
-        <input type="text" name="location" value="<%=listing.location%>">
-        <input type="text" name="country" value="<%=listing.country%>">
+        <input type="text" name="listing[title]" value="<%=listing.title%>">
+        <br>
+        <input type="text" name="listing[description]" value="<%=listing.description%>">
+        <br>
+        <input type="number" name="listing[price]" value="<%=listing.price%>">
+        <br>
+        <input type="text" name="listing[location]" value="<%=listing.location%>">
+        <br>
+        <input type="text" name="listing[country]" value="<%=listing.country%>">
+        <br>
         <button type="submit">Update</button>
     </form>
 </body>
