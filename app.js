@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import Listing from "./models/listing.js";
 import { fileURLToPath } from "url";
 import path from "path";
+import methodoverride from "method-override";
 const app=express();
+app.use(methodoverride("_method"));
 const MONGO_URL="mongodb://127.0.0.1:27017/wonderlust";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,6 +41,11 @@ app.get("/listings",async (req,res)=>{
 const allListing=await Listing.find({});
 res.render("listing/index.ejs",{allListing});
 });
+
+app.get("/listings/:id/edit",async(req,res)=>{
+    const {id}=req.params;
+    const listing=await Listing.findById(id);
+    res.render("listing/edit.ejs",{listing});});
 
 
 
