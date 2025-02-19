@@ -42,6 +42,7 @@ res.render("listing/show.ejs",{listing});
 });
 app.get("/listings",async (req,res)=>{
 const allListing=await Listing.find({});
+console.log(allListing);
 res.render("listing/index.ejs",{allListing});
 });
 

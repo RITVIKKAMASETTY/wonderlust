@@ -29,3 +29,32 @@ align-items:space-evenly;text-align:center;}
 .f-info-socials{width:100%;display:flex;align-items:center;justify-content:center;}
 .f-info-socials i{margin-right:1rem;font-size:1.2rem;vertical-align:middle;}
 .f-info-brand{width:100%;display:flex;align-items:center;justify-content:center;}
+.card{
+    border:none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius:1rem !important;
+    width:100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding:0 !important;
+}
+.card-text{
+    font-weight:400 !important;
+}
+body{
+    font-family:"Plus Jakarta Sans",sans-serif !important;
+}
+.listinglink{
+    text-decoration:none !important;
+}
+.card-img-overlay{
+    opacity:0;
+}
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+}
+form input{width:100%;}

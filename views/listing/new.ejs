@@ -1,25 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<% layout("/layot/boilerplate.ejs")%>
 <body>
     <p>create new listing</p>
 <form method="POST" action="/listings">
+  <div style="width:100%">
+    <label for="title" class="form-label">Title</label>
     <input type="text" name="listing[title]" placeholder="enter title">
-    <br>
-    <input type="text" name="listing[description]" placeholder="enter description">
-    <br>
-    <input type="text" name="listing[price]" placeholder="enter price">
-    <br>
-    <input type="text" name="listing[location]" placeholder="enter location">
-    <br>
-    <input type="text" name="listing[country]" placeholder="enter country">
-    <br>
-    <input type="text" name="listing[image]" placeholder="enter url">
-    <br>
+</div>
+  <div>
+        <label for="description" class="form-label">Description</label>
+        <input type="text" name="listing[description]" placeholder="enter description">
+    </div>
+    <div>
+        <label for="price" class="form-label">Price</label>
+        <input type="text" name="listing[price]" placeholder="enter price">
+    </div>
+    <div>
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="listing[location]" placeholder="enter location">
+    </div>
+    <div>
+        <label for="country" class="form-label">Country</label>
+        <input type="text" name="listing[country]" placeholder="enter country">
+    </div>
+    <div>
+        <label for="image" class="form-label">Image</label>
+        <input type="text" name="listing[image]" placeholder="enter url">
+    </div>
     <button>create listing</button>
 </form>
 </body>
