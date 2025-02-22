@@ -1,6 +1,6 @@
 .navbar{
     background-color:white;
-    height:5rem;
+    height:4rem;
 }
 .fa-compass{
 color:#fe424d;
@@ -11,7 +11,7 @@ color:#222222 !important;
 }
 
 /* footer */
-.f-info-links{
+.f-info-links a{
 text-decoration:none;
 color:#222222;
 }
@@ -24,8 +24,8 @@ background-color:#ebebeb;
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
-align-items:space-evenly;text-align:center;}
-.f-info-links{width:100%;display:flex;align-items:center;justify-content:center;}
+text-align:center;align-items: center;justify-content: center;gap:1rem;padding: 1rem 0;}
+.f-info-links{width:100%;display:flex;align-items:center;justify-content:center;gap:1rem;}
 .f-info-socials{width:100%;display:flex;align-items:center;justify-content:center;}
 .f-info-socials i{margin-right:1rem;font-size:1.2rem;vertical-align:middle;}
 .f-info-brand{width:100%;display:flex;align-items:center;justify-content:center;}
@@ -46,6 +46,12 @@ align-items:space-evenly;text-align:center;}
 }
 body{
     font-family:"Plus Jakarta Sans",sans-serif !important;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+.container{
+flex:1;
 }
 .listinglink{
     text-decoration:none !important;
@@ -57,4 +63,14 @@ body{
     opacity:0.2;
     background-color: white;
 }
-form input{width:100%;}
+.btn{
+color:white !important;
+background-color:#fe424d !important;
+border-color:none !important;
+}
+.showimg{
+height:30vh;
+}
+.btns{
+display:flex;
+}

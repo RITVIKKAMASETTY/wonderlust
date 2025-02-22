@@ -1,13 +1,10 @@
 <% layout("/layot/boilerplate.ejs")%>
 <body>
-    <p>listing details</p>
-    <ul>
-    <li><%=listing.title%></li>
-    <li><%=listing.description%></li>
-    <li>&#8377;<%=listing.price.toLocaleString("en-IN")%></li>
-    <li><%=listing.location%></li>
-    <li><%=listing.country%></li>
-    </ul>
-    <a href="/listings/<%=listing._id%>/edit">edit</a>
-<form method="POST" action="/listings/<%=listing._id%>?_method=DELETE"><button>delete</button></form>
+    <div class="row">
+        <div class="col-8 offset-2 mt-3">
+    <div class="card col-6 offset-2">  <p>listing details</p><img src="<%=listing.image%>" class="card-img-top showimg" alt="...">
+        <div class="card-body">
+          <p class="card-text"><b><%=listing.title%></b><br><br><b><%=listing.description%></b><br><br><b>&#8377;<%=listing.price.toLocaleString("en-IN")%></b><br><br><b><%=listing.location%></b><br><br><b><%=listing.country%></b><br><br></div></div>
+<div class="btns"><a href="/listings/<%=listing._id%>/edit" class="btn offset-4 mb-4">edit</a>
+<form method="POST" action="/listings/<%=listing._id%>?_method=DELETE"><button class="btn width:4pxcol-4 offset-4 flex">delete</button></form></div></div></div>
 </body>

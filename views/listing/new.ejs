@@ -1,32 +1,41 @@
 <% layout("/layot/boilerplate.ejs")%>
+<div class="row">
+<div clas="col-8 offset-2">
 <body>
-    <p>create new listing</p>
-<form method="POST" action="/listings">
-  <div style="width:100%">
+    <p><b style="font-size:2rem;">create new listing</b></p>
+<form method="POST" action="/listings" novalidate class="needs-validation">
+  <div class="mb-3">
     <label for="title" class="form-label">Title</label>
-    <input type="text" name="listing[title]" placeholder="enter title">
+    <input type="text" name="listing[title]" class="form-control" required>
+    <div class="valid-feedback">Title looks good</div>
+    <div class="invalid-feedback">Title is required</div>
 </div>
-  <div>
+  <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="text" name="listing[description]" placeholder="enter description">
+        <input type="text" name="listing[description]" class="form-control" required>
+        <div class="valid-feedback">description looks good</div>
+    <div class="invalid-feedback">description is required</div>
     </div>
-    <div>
+    <div class="row">
+    <div class="mb-3 col-md-4">
         <label for="price" class="form-label">Price</label>
-        <input type="text" name="listing[price]" placeholder="enter price">
+        <input type="text" name="listing[price]" class="form-control" required>
     </div>
-    <div>
+    <div class="mb-3 col-md-8">
         <label for="location" class="form-label">Location</label>
-        <input type="text" name="listing[location]" placeholder="enter location">
+        <input type="text" name="listing[location]" class="form-control">
     </div>
-    <div>
+    </div>
+    <div class="mb-3">
         <label for="country" class="form-label">Country</label>
-        <input type="text" name="listing[country]" placeholder="enter country">
+        <input type="text" name="listing[country]" class="form-control">
     </div>
-    <div>
+    <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input type="text" name="listing[image]" placeholder="enter url">
+        <input type="text" name="listing[image]" class="form-control">
     </div>
-    <button>create listing</button>
+    <button class="btn mb-3" >create listing</button>
 </form>
+</div>
+</div>
 </body>
-</html>

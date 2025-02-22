@@ -5,6 +5,9 @@ import { fileURLToPath } from "url";
 import path from "path";
 import methodoverride from "method-override";
 import ejsMate from "ejs-mate";
+import wrapasync from "./utils/wrapasync.js";
+import expreserror from "./utils/expreserror.js";
+import { listingSchema } from "./schema.js";
 const app=express();
 app.use(methodoverride("_method"));
 app.engine("ejs",ejsMate);
@@ -28,43 +31,54 @@ app.set("views",path.join(__dirname,"views"));
 app.get("/",(req,res)=>{
     res.send("abcd");
 });
+const validateListing=(req,res,next)=>{let {error}=listingSchema.validate(req.body);if(error){let errormessage=error.details.map(el=>el.message).join(",");throw new expreserror(400,error.details[0].errormessage);}else{next();}}
 app.get("/listings/new",(req,res)=>{
     res.render("listing/new.ejs");
 });
-app.post("/listings",async(req,res)=>{
+app.post("/listings",validateListing,wrapasync(async(req,res,next)=>{
 const newlisting=new Listing(req.body.listing);
-newlisting.save();res.redirect("/listings");
-console.log(newlisting);});
-app.get("/listings/:id",async(req,res)=>{
+    await newlisting.save();res.redirect("/listings");
+    console.log(newlisting)
+}));
+app.get("/listings/:id",wrapasync(async(req,res)=>{
 let {id}=req.params;
+console.log("id===========",req.params);
 const listing=await Listing.findById(id);
 res.render("listing/show.ejs",{listing});
-});
-app.get("/listings",async (req,res)=>{
+}));
+app.get("/listings",wrapasync(async (req,res)=>{
 const allListing=await Listing.find({});
 console.log(allListing);
 res.render("listing/index.ejs",{allListing});
-});
+}));
 
-app.get("/listings/:id/edit",async(req,res)=>{
+app.get("/listings/:id/edit",wrapasync(async(req,res)=>{
     const {id}=req.params;
     const listing=await Listing.findById(id);
-    res.render("listing/edit.ejs",{listing});});
+    res.render("listing/edit.ejs",{listing});}));
 
-app.put("/listings/:id",async(req,res)=>{
+app.put("/listings/:id",validateListing,wrapasync(async(req,res)=>{
+if(!req.body.listing){throw new expreserror(400,"invalid data");}
 let {id}=req.params;
 await Listing.findByIdAndUpdate(id,{...req.body.listing});
 res.redirect(`/listings/${id}`);
-})
+}));
 
-app.delete("/listings/:id",async(req,res)=>{
+app.delete("/listings/:id",wrapasync(async(req,res)=>{
 let {id}=req.params;
 let deletedlisting=await Listing.findByIdAndDelete(id);
 console.log(deletedlisting);
 res.redirect("/listings");
-})
-
-
+}));
+app.all("*",(req,res,next)=>{
+    next(new expreserror(404,"not found"));
+});
+app.use((err,req,res,next)=>{
+    console.log(err);
+    let {statusCode=500,message}=err;
+    console.log("a");
+    res.render("listing/error.ejs",{err});
+});
 
 
 
