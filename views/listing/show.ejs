@@ -2,9 +2,26 @@
 <body>
     <div class="row">
         <div class="col-8 offset-2 mt-3">
-    <div class="card col-6 offset-2">  <p>listing details</p><img src="<%=listing.image%>" class="card-img-top showimg" alt="...">
+    <div class="card col-6 offset-2"><p><%=listing.title%></p><img src="<%=listing.image%>" class="card-img-top showimg" alt="...">
         <div class="card-body">
-          <p class="card-text"><b><%=listing.title%></b><br><br><b><%=listing.description%></b><br><br><b>&#8377;<%=listing.price.toLocaleString("en-IN")%></b><br><br><b><%=listing.location%></b><br><br><b><%=listing.country%></b><br><br></div></div>
+          <p class="card-text"><b><%=listing.description%></b><br><br><b>&#8377;<%=listing.price.toLocaleString("en-IN")%></b><br><br><b><%=listing.location%></b><br><br><b><%=listing.country%></b><br><br></div></div>
 <div class="btns"><a href="/listings/<%=listing._id%>/edit" class="btn offset-4 mb-4">edit</a>
 <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE"><button class="btn width:4pxcol-4 offset-4 flex">delete</button></form></div></div></div>
+<div class="col-8 offset-2 mt-3">
+    <hr/>
+    <h4>Leave A Review</h4>
+    <form action="/listings/<%=listing._id%>/reviews" method="POST">
+        <div class="mt-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+        </div>
+        <div class="mt-3">
+            <label for="comment">Comment</label>
+            <textarea id="comment" name="review[comment]" class="form-control"></textarea>
+        </div>
+        <div class="mt-3">
+            <button type="submit" class="btn">Submit</button>
+        </div>
+    </form>
+</div>
 </body>

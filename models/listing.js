@@ -18,7 +18,13 @@ const listingSchema = new schema({
             return v === "" ? "https://plus.unsplash.com/premium_photo-1673292293042-cafd9c8a3ab3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bmF0dXJlfGVufDB8fDB8fHww" : v;
         }
     },
-    country: { type: String, required: true }
+    country: { type: String, required: true },
+    reviews:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Review",
+        },
+    ],
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

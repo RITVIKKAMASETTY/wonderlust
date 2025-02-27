@@ -8,6 +8,7 @@ import ejsMate from "ejs-mate";
 import wrapasync from "./utils/wrapasync.js";
 import expreserror from "./utils/expreserror.js";
 import { listingSchema } from "./schema.js";
+import Review from "./models/review.js";
 const app=express();
 app.use(methodoverride("_method"));
 app.engine("ejs",ejsMate);
@@ -31,7 +32,22 @@ app.set("views",path.join(__dirname,"views"));
 app.get("/",(req,res)=>{
     res.send("abcd");
 });
-const validateListing=(req,res,next)=>{let {error}=listingSchema.validate(req.body);if(error){let errormessage=error.details.map(el=>el.message).join(",");throw new expreserror(400,error.details[0].errormessage);}else{next();}}
+// const validateListing=(req,res,next)=>{let {error}=listingSchema.validate(req.body);if(error){let errormessage=error.details.map(el=>el.message).join(",");throw new expreserror(400,errormessage);}else{next();}}
+// app.get("/listings/new",(req,res)=>{
+//     res.render("listing/new.ejs");
+// });
+const validateListing = (req, res, next) => {
+    console.log("Incoming request body:", req.body); // Debugging
+
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const errormessage = error.details.map(el => el.message).join(", ");
+        throw new expreserror(400, errormessage);
+    } else {
+        next();
+    }
+};
+
 app.get("/listings/new",(req,res)=>{
     res.render("listing/new.ejs");
 });
@@ -51,7 +67,6 @@ const allListing=await Listing.find({});
 console.log(allListing);
 res.render("listing/index.ejs",{allListing});
 }));
-
 app.get("/listings/:id/edit",wrapasync(async(req,res)=>{
     const {id}=req.params;
     const listing=await Listing.findById(id);
@@ -63,13 +78,22 @@ let {id}=req.params;
 await Listing.findByIdAndUpdate(id,{...req.body.listing});
 res.redirect(`/listings/${id}`);
 }));
+app.post("/listings/:id/reviews",wrapasync(async(req,res)=>{
+    let {id}=req.params;
+    let listing=await Listing.findById(id);
+let reviews=new Review(req.body.review);
+listing.reviews.push(reviews);
+await reviews.save();
+await listing.save();
+res.redirect(`/listings/${id}`);
+}))
 
-app.delete("/listings/:id",wrapasync(async(req,res)=>{
+app.delete("/listings/:id",async(req,res)=>{
 let {id}=req.params;
 let deletedlisting=await Listing.findByIdAndDelete(id);
 console.log(deletedlisting);
 res.redirect("/listings");
-}));
+});
 app.all("*",(req,res,next)=>{
     next(new expreserror(404,"not found"));
 });
