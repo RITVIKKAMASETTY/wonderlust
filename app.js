@@ -7,7 +7,7 @@ import methodoverride from "method-override";
 import ejsMate from "ejs-mate";
 import wrapasync from "./utils/wrapasync.js";
 import expreserror from "./utils/expreserror.js";
-import { listingSchema } from "./schema.js";
+import { listingSchema,reviewSchema} from "./schema.js";
 import Review from "./models/review.js";
 const app=express();
 app.use(methodoverride("_method"));
@@ -47,6 +47,15 @@ const validateListing = (req, res, next) => {
         next();
     }
 };
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const errormessage = error.details.map(el => el.message).join(", ");
+        throw new expreserror(400, errormessage);
+    } else {
+        next();
+    }
+};
 
 app.get("/listings/new",(req,res)=>{
     res.render("listing/new.ejs");
@@ -56,12 +65,21 @@ const newlisting=new Listing(req.body.listing);
     await newlisting.save();res.redirect("/listings");
     console.log(newlisting)
 }));
-app.get("/listings/:id",wrapasync(async(req,res)=>{
-let {id}=req.params;
-console.log("id===========",req.params);
-const listing=await Listing.findById(id);
-res.render("listing/show.ejs",{listing});
+// app.get("/listings/:id",wrapasync(async(req,res)=>{
+// let {id}=req.params;
+// console.log("id===========",req.params);
+// const listing=await Listing.findById(id).populate("reviews");
+// console.log(listing);
+// res.render("listing/show.ejs",{listing});
+// }));
+app.get("/listings/:id", wrapasync(async (req, res) => {
+    let { id } = req.params;
+    console.log("id===========",req.params);
+
+    const listing = await Listing.findById(id).populate("reviews").exec();
+    res.render("listing/show.ejs", { listing });
 }));
+
 app.get("/listings",wrapasync(async (req,res)=>{
 const allListing=await Listing.find({});
 console.log(allListing);
@@ -78,7 +96,7 @@ let {id}=req.params;
 await Listing.findByIdAndUpdate(id,{...req.body.listing});
 res.redirect(`/listings/${id}`);
 }));
-app.post("/listings/:id/reviews",wrapasync(async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview,wrapasync(async(req,res)=>{
     let {id}=req.params;
     let listing=await Listing.findById(id);
 let reviews=new Review(req.body.review);
@@ -86,8 +104,13 @@ listing.reviews.push(reviews);
 await reviews.save();
 await listing.save();
 res.redirect(`/listings/${id}`);
-}))
-
+}));
+app.delete("/listings/:id/reviews/:reviewid",wrapasync(async(req,res)=>{
+    let {id,reviewid}=req.params;
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewid}});
+    await Review.findByIdAndDelete(reviewid);
+    res.redirect(`/listings/${id}`);
+}));
 app.delete("/listings/:id",async(req,res)=>{
 let {id}=req.params;
 let deletedlisting=await Listing.findByIdAndDelete(id);

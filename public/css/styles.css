@@ -29,7 +29,7 @@ text-align:center;align-items: center;justify-content: center;gap:1rem;padding: 
 .f-info-socials{width:100%;display:flex;align-items:center;justify-content:center;}
 .f-info-socials i{margin-right:1rem;font-size:1.2rem;vertical-align:middle;}
 .f-info-brand{width:100%;display:flex;align-items:center;justify-content:center;}
-.card{
+.listing-card{
     border:none !important;
     margin-bottom: 2rem;
 }
@@ -40,6 +40,7 @@ text-align:center;align-items: center;justify-content: center;gap:1rem;padding: 
 }
 .card-body{
     padding:0 !important;
+    color:black !important;
 }
 .card-text{
     font-weight:400 !important;
