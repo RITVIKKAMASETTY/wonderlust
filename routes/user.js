@@ -1,11 +1,10 @@
 import express from "express";
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 import User from "../models/user.js";
 import wrapasync from "../utils/wrapasync.js";
 import passport from "passport";
 import { isLoggedIn, saveReturnTo,is} from "../middleware.js";
 import Listing from "../models/listing.js";
-
 
 // Signup route
 router.get("/signup", (req, res) => {

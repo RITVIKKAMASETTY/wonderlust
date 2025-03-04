@@ -10,7 +10,7 @@ import { storage } from "../cloudconfig.js";
 import multer from "multer";
 
 // Create router
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // Set up multer with Cloudinary storage
 const upload = multer({ storage });
