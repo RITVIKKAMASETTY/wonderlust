@@ -75,3 +75,13 @@ height:30vh;
 .btns{
 display:flex;
 }
+/* Add this to your existing CSS */
+.card-img-top {
+    height: 12rem;
+}
+
+@media (min-width: 768px) {
+    .card-img-top {
+        height: 20rem;
+    }
+}

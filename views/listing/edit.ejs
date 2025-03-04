@@ -2,12 +2,13 @@
 <body>
     <div class="row">
         <div class="col-8 offset-2">
-    <form action="/listings/<%=listing._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
+    <form action="/listings/<%=listing._id%>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
        <div class="my-3"><label for="title" class="form-label">Title</label> <input type="text" name="listing[title]" value="<%=listing.title%>" class="form-control" required></div>
        <div class="my-3"><label for="description" class="form-label">Description</label><input type="text" name="listing[description]" value="<%=listing.description%>" class="form-control" required></div>
         <div class="my-3"><label for="price" class="form-label">Price</label><input type="number" name="listing[price]" value="<%=listing.price%>" class="form-control"required></div>
         <div class="my-3"><label for="location" class="form-label">location</label><input type="text" name="listing[location]" value="<%=listing.location%>" class="form-control"required></div>
         <div class="my-3"><label for="country" class="form-label">country</label><input type="text" name="listing[country]" value="<%=listing.country%>" class="form-control"required></div>
+        <div class="my-3"><label for="image" class="form-label">Current Image</label><img src="<%=oi%>" class="card-img-top showimg" alt="..."></div><div class="my-3"><label for="image" class="form-label">Upload Image</label><input type="file" name="listing[image]" class="form-control"></div>
         <button type="submit"class="btn my-3">Update</button>
     </form>
     </div>
