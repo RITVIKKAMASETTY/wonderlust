@@ -223,9 +223,6 @@ app.use((req, res, next) => {
     res.locals.currentuser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-
-    res.locals.reviewid = req.session.reviewId;
-    console.log("reviewid:", res.locals.reviewid);
     next();
 })
 app.get("/demouser",async(req,res)=>{
@@ -268,7 +265,6 @@ app.use((err, req, res, next) => {
     console.error(err);
     const { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("listing/error.ejs", { err });
-    next(err); 
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
